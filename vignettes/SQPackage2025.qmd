@@ -1,0 +1,86 @@
+---
+title: "SQPackage2025"
+format: html
+vignette: >
+  %\VignetteIndexEntry{SQPackage2025}
+  %\VignetteEngine{quarto::html}
+  %\VignetteEncoding{UTF-8}
+knitr:
+  opts_chunk:
+    collapse: true
+    comment: '#>'
+---
+
+This is a new package built for the Advance Programming in R module -STAT40830- from UCD School of Computer Science. It has been built to read, print, summarise and plot data from the Country Indicator Data provided by the World Bank. The Economic, Social, Environmental, Health, Education, Development and Energy data within these, is hosted on the [Humanitarian Data Exchange (HDX)](https://data.humdata.org/) and is managed by the Centre for Humanitarian Data from the United Nations Secretariat, OCHA. It was designed to make accessing and reading the large amounts of data collected in these reports easier. Simply identify an indicator of interest e.g. sociatal - "population (total)", economic- "GDP (current \$US)", or health- "Mortality rate, under-5 (per 1,000 live births)" - and identify trends over time.
+
+```{r setup}
+# Ensure devtools is installed and loaded if you're using load_all()
+if (!requireNamespace("devtools", quietly = TRUE)) {
+  install.packages("devtools")
+}
+# Load the package from source during rendering
+devtools::load_all(".")
+
+# Now, this library call should succeed
+
+knitr::opts_chunk$set(echo = TRUE, collapse= TRUE, message = FALSE, warning = FALSE)
+```
+
+Install and load the package:
+
+```{r}
+library(SQPackage2025)
+```
+
+-   This package includes some example datasets from [Colombia](https://data.humdata.org/dataset/world-bank-combined-indicators-for-colombia), [Spain](https://data.humdata.org/dataset/world-bank-combined-indicators-for-spain) and [Ireland](https://data.humdata.org/dataset/world-bank-combined-indicators-for-ireland), but they can also be found through the links for each country. When downloading a new country dataset, simply pass the country code ("irl", "col" etc) to the read_country_indicators function.
+
+```{r}
+#|label: Read the country csv file by passing the country code indicator
+data_irl = read_country_indicators("irl")
+data_col = read_country_indicators("col")
+data_esp = read_country_indicators("esp")
+```
+
+-   To analyse the unique indicators that were measured for a given country, print the 'indicator_data' object created in the previous step. The output from this function will give all the unique indicators and the first and last year that that indicator was recorded. This comes in handy when probing new indicators in the dataset later on.
+
+```{r}
+print(data_irl)
+```
+
+```{r}
+print(data_col)
+```
+
+-   To get an overall sense of how the data is structured, the summary.indicator_data function can be used. This function output produces a 'skimr' like table.
+
+```{r}
+total_summary= summary.indicator_data(data_irl)
+total_summary
+```
+
+```{r}
+total_summary= summary.indicator_data(data_col)
+total_summary
+```
+
+-   Identifying an indicator of interest, using the binned_summary.indicator_data function- it can be analysed and summarised in further detail. Given the relatively large time scale for which some of the indicators have been analysed, it can be collapsed (or binned) into larger time chunks, i.e. 5- or 10- years- by using the bin-size argument.
+
+```{r}
+summary_output_ArableIRL = binned_summary.indicator_data(data_irl, bin_size = 5, indicator_name = "Arable land (hectares)")
+summary_output_ArableIRL
+```
+
+```{r}
+summary_output_ArableCOL = binned_summary.indicator_data(data_col, bin_size = 10, indicator_name = "Arable land (hectares)")
+summary_output_ArableCOL
+```
+
+-   From the binned_summary.indicator_data, a nice plot of the indicator change over time can be visualised using the plot_binned_summary function. This will neatly plot the indicator of interest, the mean of the value for that indicator in the bin-size.
+
+```{r}
+plot_binned_summary(summary_output_ArableIRL, title = NULL)
+```
+
+```{r}
+plot_binned_summary(summary_output_ArableCOL, title = NULL)
+```

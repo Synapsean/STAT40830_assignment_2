@@ -1,0 +1,22 @@
+Package: SQPackage2025
+Title: Read, summarise and plot indicator data from data.humdata.org
+Version: 0.0.0.9000
+Authors@R: 
+    person("Sean", "Quinlan", , "sean.quinlan@ucd.ie", role = c("aut", "cre"))
+Description: This package was built to read the Country Indicator Data provided by the World Bank. The Economic, Social, Environmental, Health, Education, Development and Energy data within these, is hosted on the [Humanitarian Data Exchange (HDX)](https://data.humdata.org/) and is managed by the Centre for Humanitarian Data from the United Nations Secretariat, OCHA. This package will read the indicators_X.csv (X is any country on the database) and summarise the data for an indicator of choice. 
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
+Suggests: 
+    knitr,
+    quarto
+VignetteBuilder: quarto
+Imports: 
+    data.table,
+    rlang,
+    ggplot2,
+    janitor,
+    skimr,
+    stringr,
+    tibble
