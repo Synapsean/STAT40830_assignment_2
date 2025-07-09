@@ -1,0 +1,24 @@
+---
+title: "Assignment_2"
+---
+
+## Quarto
+
+Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+
+Will this work?
+
+```{r}
+library("usethis")
+library("renv")
+library("gitcreds")
+```
+
+```{r}
+usethis::git_sitrep()
+usethis::use_git_config(
+  user.name= "Synapsean",
+  user.email= "sean.quinlan@ucd.ie"
+)
+usethis::create_github_token()
+```
